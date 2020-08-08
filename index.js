@@ -64,16 +64,14 @@ function getWinners(callback) {
 
   // Declare the variable to return
   const winners = dataArray.map((item) => {
-    if (item["Home Team Goals"] > item["Away Team Goals"]) {
-      return item["Home Team Name"];
-    } else if (item["Home Team Goals"] < item["Away Team Goals"]) {
-      return item["Away Team Name"];
-    } else if (item["Home Team Goals"] === item["Away Team Goals"]) {
-      if (item["Win conditions"].includes(item["Away Team Name"])) {
-        return item["Away Team Name"];
-      } else if (item["Win conditions"].includes(item["Home Team Name"])) {
-        return item["Home Team Name"];
-      }
+    if (item["Home Team Goals"] === item["Away Team Goals"]) {
+      return item["Win conditions"].includes(item["Home Team Name"])
+        ? item["Home Team Name"]
+        : item["Away Team Name"];
+    } else {
+      return item["Home Team Goals"] > item["Away Team Goals"]
+        ? item["Home Team Name"]
+        : item["Away Team Name"];
     }
   });
 
