@@ -66,8 +66,14 @@ function getWinners(callback) {
   const winners = dataArray.map((item) => {
     if (item["Home Team Goals"] > item["Away Team Goals"]) {
       return item["Home Team Name"];
-    } else {
+    } else if (item["Home Team Goals"] < item["Away Team Goals"]) {
       return item["Away Team Name"];
+    } else if (item["Home Team Goals"] === item["Away Team Goals"]) {
+      if (item["Win conditions"].includes(item["Away Team Name"])) {
+        return item["Away Team Name"];
+      } else if (item["Win conditions"].includes(item["Home Team Name"])) {
+        return item["Home Team Name"];
+      }
     }
   });
 
@@ -84,17 +90,44 @@ Parameters:
  * callback function getYears
  */
 
-function getWinnersByYear(/* code here */) {}
+console.log("========== Task 5 ==========");
 
-getWinnersByYear();
+function getWinnersByYear(callbackWinners, callbackYears) {
+  // Add the values of the callbacks in a variable
+  const winners = callbackWinners(getFinals);
+  const years = callbackYears(getFinals);
+
+  // Declare what to return
+  const returnWinners = winners.forEach((item, index) => {
+    console.log(`In ${years[index]}, ${item} won the world cup!`);
+  });
+
+  return returnWinners;
+}
+
+getWinnersByYear(getWinners, getYears);
 
 /* Task 6: Write a function called `getAverageGoals` that accepts a parameter `data` and returns the the average number of home team goals and away team goals scored per match (Hint: use .reduce and do this in 2 steps) */
 
-function getAverageGoals(/* code here */) {
-  /* code here */
+console.log("========== Task 6 ==========");
+
+function getAverageGoals(data) {
+  // Declare the variables and values for the sum of all goals
+  let averageHomeGoals = data.reduce((accumulator, index) => accumulator + index["Home Team Goals"], 0);
+  let averageAwayGoals = data.reduce((accumulator, index) => accumulator + index["Away Team Goals"], 0);
+
+  // Get the average
+  averageHomeGoals = averageHomeGoals / data.length;
+  averageAwayGoals = averageAwayGoals / data.length;
+
+  // Declare and assign a value to the string to return
+  const stringToReturn = `Average Home Goals: ${averageHomeGoals} - Average Away Goals: ${averageAwayGoals}`;
+
+  // Return the string
+  return stringToReturn;
 }
 
-getAverageGoals();
+console.log(getAverageGoals(fifaData));
 
 /// STRETCH 🥅 //
 

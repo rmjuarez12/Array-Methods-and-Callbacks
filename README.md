@@ -59,7 +59,7 @@ Using VSCode and a Command Line:
 
 ### Task 2: Minimum Viable Product
 
-Find the file `index.js` and complete the tasks until all of your tests pass.
+- [x] Find the file `index.js` and complete the tasks until all of your tests pass.
 
 You may want to use the [World Cup summary data](https://www.foxsports.com/soccer/fifa-world-cup/history) on Fox Sports to check your math as you go.
 
