@@ -28,9 +28,10 @@ console.log("Winner of 2014 world cup final:", worldCupFinal2014[0]["Win conditi
 console.log("========== Task 2 ==========");
 
 function getFinals(data) {
-  // Declare array to return
+  // Declare and assign the variable for the array to return
   const allFinalsData = data.filter((item) => item.Stage === "Final");
 
+  // Return the new array
   return allFinalsData;
 }
 
@@ -38,19 +39,43 @@ console.log("All finals data:", getFinals(fifaData));
 
 /* Task 3: Implement a higher-order function called `getYears` that accepts the callback function `getFinals`, and returns an array called `years` containing all of the years in the dataset */
 
-function getYears(/* code here */) {
-  /* code here */
+console.log("========== Task 3 ==========");
+
+function getYears(callback) {
+  // Add the value of the callback in a variable
+  const dataArray = callback(fifaData);
+
+  // Declare the variable to return
+  const years = dataArray.map((item) => item.Year);
+
+  // Return the new array
+  return years;
 }
 
-getYears();
+console.log(getYears(getFinals));
 
 /* Task 4: Implement a higher-order function called `getWinners`, that accepts the callback function `getFinals()` and determine the winner (home or away) of each `finals` game. Return the name of all winning countries in an array called `winners` */
 
-function getWinners(/* code here */) {
-  /* code here */
+console.log("========== Task 4 ==========");
+
+function getWinners(callback) {
+  // Add the value of the callback in a variable
+  const dataArray = callback(fifaData);
+
+  // Declare the variable to return
+  const winners = dataArray.map((item) => {
+    if (item["Home Team Goals"] > item["Away Team Goals"]) {
+      return item["Home Team Name"];
+    } else {
+      return item["Away Team Name"];
+    }
+  });
+
+  // Return the new array
+  return winners;
 }
 
-getWinners();
+console.log(getWinners(getFinals));
 
 /* Task 5: Implement a higher-order function called `getWinnersByYear` that accepts the following parameters and returns a set of strings "In {year}, {country} won the world cup!" 
 
