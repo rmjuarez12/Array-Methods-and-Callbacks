@@ -134,15 +134,52 @@ console.log(getAverageGoals(fifaData));
 Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
-function getCountryWins(/* code here */) {
-  /* code here */
+console.log("========== Stretch Task 1 ==========");
+
+function getCountryWins(data, teamInitials) {
+  // Get the info where the team with said initials is present
+  const teamInfo = data.filter(
+    (item) => item["Away Team Initials"] === teamInitials || item["Home Team Initials"] === teamInitials
+  );
+
+  if (teamInfo.length === 0) {
+    return `No team with "${teamInitials}" initals found!`;
+  }
+
+  // Get the team name
+  const teamName = teamInfo.map((item) => {
+    return item["Away Team Initials"] === teamInitials ? item["Away Team Name"] : item["Home Team Name"];
+  });
+
+  // Get the winners
+  const winners = teamInfo.map((item) => {
+    if (item["Home Team Goals"] === item["Away Team Goals"]) {
+      return item["Win conditions"].includes(item["Home Team Name"])
+        ? item["Home Team Name"]
+        : item["Away Team Name"];
+    } else {
+      return item["Home Team Goals"] > item["Away Team Goals"]
+        ? item["Home Team Name"]
+        : item["Away Team Name"];
+    }
+  });
+
+  // Get the count of how many times the specified team won
+  let teamWins = winners.filter((item) => item.includes(teamName[0]));
+  teamWins = teamWins.length;
+
+  // Variable to return
+  const winnerString = `The team ${teamName[0]} got ${teamWins} Victories`;
+
+  // Return the totla number of wins
+  return winnerString;
 }
 
-getCountryWins();
+console.log(getCountryWins(fifaData, "SWE"));
 
 /* Stretch 3: Write a function called getGoals() that accepts a parameter `data` and returns the team with the most goals score per appearance (average goals for) in the World Cup finals */
 
-function getGoals(/* code here */) {
+function getGoals(data) {
   /* code here */
 }
 
@@ -150,7 +187,7 @@ getGoals();
 
 /* Stretch 4: Write a function called badDefense() that accepts a parameter `data` and calculates the team with the most goals scored against them per appearance (average goals against) in the World Cup finals */
 
-function badDefense(/* code here */) {
+function badDefense(data) {
   /* code here */
 }
 
